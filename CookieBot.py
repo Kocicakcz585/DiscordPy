@@ -35,10 +35,8 @@ client = MyClient(intents=intents)
 def getUserData(user):
     userID = user.id
     file = userDataLocation + str(userID) + ".json"
-    print('UserData File: ' + file)
 
     if not os.path.exists(file):
-        print('UserData file: ' + file)
         print(f'UserData file does not exist, creating one for {user.name} ..')
         shutil.copy(templateUserData, userDataLocation)
         os.rename(userDataLocation + 'template.json', userDataLocation + str(userID) + '.json')
@@ -84,7 +82,7 @@ def clickCookie(user):
             print('cookies: ' + str(f['cookies']))
 
             #f.seek(0)
-            json.dump(f, file, indent=4)
+            json.dump(file, f, indent=4)
             f.truncate()
 
 
@@ -100,10 +98,6 @@ async def on_message(message):
 
     if message.content.startswith(prefix + 'ping'):
         await message.channel.send('Pong!')
-
-@client.tree.command(name='cookieclicker', description='Starts the cookie clicker game.')
-async def CClicker(Interaction: discord.Interaction) -> None:
-    await Interaction.response.send_message('neser me uz')
 
 @client.tree.command(name='prefix', description='Returns the bot prefix.')
 async def showPrefix(Interaction: discord.Interaction) -> None:
