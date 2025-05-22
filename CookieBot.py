@@ -101,19 +101,6 @@ async def on_message(message):
     if message.content.startswith(prefix + 'ping'):
         await message.channel.send('Pong!')
 
-@client.event
-async def on_message(message):
-    channelID = message.channel.id
-
-    if channelID != 1375109164937773106:
-        return
-
-    if message.author == client.user:
-        return
-    
-    if message.content.startswith(prefix + 'StartGame'):
-        await message.channel.send('test')
-
 @client.tree.command(name='cookieclicker', description='Starts the cookie clicker game.')
 async def CClicker(Interaction: discord.Interaction) -> None:
     await Interaction.response.send_message('neser me uz')
