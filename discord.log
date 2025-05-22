@@ -28,3 +28,5 @@
 [2025-05-22 20:24:08] [DEBUG   ] discord.client: Dispatching event message
 [2025-05-22 20:24:08] [DEBUG   ] discord.webhook.async_: Webhook ID 1375177436253261994 with POST https://discord.com/api/v10/interactions/1375177436253261994/aW50ZXJhY3Rpb246MTM3NTE3NzQzNjI1MzI2MTk5NDpOaDhlclJmc1FZbU5DekluZTFQa1FTZlhCYXFVMGNmNzJ2ajEzekJrY2F4U1NZV0JwbkpjNWdKSDBseUVaalpMdnpyV0NxSUpLS1JLNEs2QXYwa2NjYXhXMFp0eWM3RE9IMDFUMWIycFRHMk9sdXNaUnZDUE9RZnNUbW00T2hYNQ/callback has returned status code 200
 [2025-05-22 20:24:08] [DEBUG   ] discord.client: Dispatching event app_command_completion
+[2025-05-22 20:24:44] [DEBUG   ] discord.gateway: Keeping shard ID None websocket alive with sequence 4.
+[2025-05-22 20:24:44] [DEBUG   ] discord.gateway: For Shard ID None: WebSocket Event: {'t': None, 's': None, 'op': 11, 'd': None}
