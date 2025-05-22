@@ -60,6 +60,6 @@ async def CClicker(Interaction: discord.Interaction) -> None:
 
 @client.tree.command(name='prefix', description='Returns the bot prefix.')
 async def showPrefix(Interaction: discord.Interaction) -> None:
-    await Interaction.response.send_message(prefix)
+    await Interaction.response.send_message('The current prefix is: ' + prefix)
 
 client.run(token=token, log_handler=handler, log_level=logging.DEBUG)
