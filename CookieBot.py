@@ -61,28 +61,27 @@ def getCookiesFromData(data):
 
 def clickCookie(user):
     file = userDataLocation + str(user.id) + ".json"
-    with open(file, 'r+') as f:
-            f = json.load(f)
 
-            CookiesPerClick = f['upgrades']['MoreCookiesPerClick']
+    if not os.path.exists(file):
+        getUserData(user)
+
+    with open(file, 'r+') as f:
+            fileData = json.load(f)
+
+            CookiesPerClick = fileData['upgrades']['MoreCookiesPerClick']
             CookiesPerClick = int(CookiesPerClick)
             CookiesPerClick += 1
-            #print('cookies per click: ' + str(CookiesPerClick))
 
-            cookies = f['cookies']
+            cookies = fileData['cookies']
+            cookies = int(cookies)
             cookies += CookiesPerClick
-            #print('cookies: ' + str(cookies))
-
-            #print('f: ' + str(f))
-            #print('file :' + str(file))
             
 
-            f['cookies'] = int(cookies)
+            fileData['cookies'] = str(cookies)
 
-            print('cookies: ' + str(f['cookies']))
-
-            #f.seek(0)
-            json.dump(file, f, indent=4)
+            f.seek(0)
+            print(f'f: {f}, \n FileData: {fileData}')
+            json.dump(fileData, f)
             f.truncate()
 
 
@@ -117,6 +116,6 @@ async def clickTheCookie(Interaction: discord.Interaction) -> None:
     clickCookie(Interaction.user)
     data = getUserData(Interaction.user)
     cookies = getCookiesFromData(data)
-    await Interaction.response.send_message('Current cookies: ' + int(cookies))
+    await Interaction.response.send_message(f'Current cookies: {str(cookies)} 🍪')
 
 client.run(token=token, log_handler=handler, log_level=logging.DEBUG)
