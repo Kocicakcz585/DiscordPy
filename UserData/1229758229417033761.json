@@ -1,8 +1,1 @@
-{
-    "name": "The weird cat-guy",
-    "cookies": 0,
-    "upgrades": {
-        "MoreCookiesPerClick": 0,
-        "EvenMoreCPc": 0
-    }
-}
+{"name": "The weird cat-guy", "cookies": "4", "upgrades": {"MoreCookiesPerClick": 0, "EvenMoreCPc": 0}}
