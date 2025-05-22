@@ -1,4 +1,3 @@
-# This example requires the 'message_content' intent.
 from dotenv import load_dotenv
 from typing import Optional
 import os
