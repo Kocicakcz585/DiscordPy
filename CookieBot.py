@@ -1,13 +1,13 @@
 import logging
-import discord.ext
 import discord
 import os
+from dotenv import load_dotenv
 from discord import app_commands
-from discord.ext import commands
-from typing import Optional
+
+load_dotenv()
 
 handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
-token = 'MTM3NTA2MDg3MzU1ODg4NDQ0Mg.GcwjQI.qKMAhhEk_mi2Qzd0oiW1AooLbWlFFRqoQQPuP8'
+token = os.getenv('BOT_TOKEN')
 MY_GUILD = discord.Object(id=1375062392433545236)
 CCHANNEL = discord.Object(id=1375109164937773106)
 
