@@ -1,13 +1,15 @@
 # This example requires the 'message_content' intent.
-
+from dotenv import load_dotenv
 from typing import Optional
-
+import os
 import discord
 from discord import app_commands
 import logging
 
+load_dotenv()
+
 handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
-token = 'MTM3NTA2MDg3MzU1ODg4NDQ0Mg.GcwjQI.qKMAhhEk_mi2Qzd0oiW1AooLbWlFFRqoQQPuP8'
+token = os.getenv('BOT_TOKEN')
 MY_GUILD = discord.Object(id=1375062392433545236)  # replace with your guild id   
 
 intents = discord.Intents.default()

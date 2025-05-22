@@ -1,9 +1,12 @@
-token = 'MTM3NTA2MDg3MzU1ODg4NDQ0Mg.GcwjQI.qKMAhhEk_mi2Qzd0oiW1AooLbWlFFRqoQQPuP8'
 from typing import Optional
-
+from dotenv import load_dotenv
+import os
 import discord
 from discord import app_commands
 
+load_dotenv()
+
+token = os.getenv('BOT_TOKEN')
 
 MY_GUILD = discord.Object(id=1375062392433545236)  # replace with your guild id  
 
