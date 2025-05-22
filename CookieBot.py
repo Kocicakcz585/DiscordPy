@@ -116,6 +116,6 @@ async def clickTheCookie(Interaction: discord.Interaction) -> None:
     clickCookie(Interaction.user)
     data = getUserData(Interaction.user)
     cookies = getCookiesFromData(data)
-    await Interaction.response.send_message(f'Current cookies: {str(cookies)} 🍪')
+    await Interaction.response.send_message(f'{Interaction.user.global_name} has: **{str(cookies)}** cookies 🍪')
 
 client.run(token=token, log_handler=handler, log_level=logging.DEBUG)
