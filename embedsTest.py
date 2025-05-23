@@ -44,6 +44,7 @@ class UpgradesMenu(discord.ui.Select):
     @discord.ui.select()
     async def callback(self, interaction: discord.Interaction) -> None:
         await interaction.response.send_message(content=f'You selected: {self.values[0]}', ephemeral=True)
+        print(f'User {interaction.user.global_name} selected {self.values[0]}')
 
 class UpgradesView(discord.ui.View):
     def __init__(self):
