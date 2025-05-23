@@ -28,10 +28,29 @@ class MyClient(discord.Client):
         self.tree.copy_global_to(guild=MY_GUILD)
         await self.tree.sync(guild=MY_GUILD)
 
-class ClickTheCookieButton(discord.ui.View):
-    # def __init__(self):
-    #     super().__init__()
-    #     self.value = None
+class UpgradesMenu(discord.ui.Select):
+    def __init__(self) -> None:
+        
+        MoreCPC_cost = 1
+        EvenMoreCPC_cost = 1
+        options = [ 
+                    discord.SelectOption(label = f'More cookies per click; Cost: {MoreCPC_cost}', description = 'Make more money per click'),
+                    discord.SelectOption(label = f'Even more CPC; Cost: {EvenMoreCPC_cost}', description = 'Make even MORE money per click'),
+                    discord.SelectOption(label = 'Go back', description = 'Go back to the main clicker')
+        ]
+
+        super().__init__(placeholder='Select an upgrade to buy', min_values=1, max_values=1, options=options)
+
+    @discord.ui.select()
+    async def callback(self, interaction: discord.Interaction) -> None:
+        await interaction.response.send_message(content=f'You selected: {self.values[0]}', ephemeral=True)
+
+class UpgradesView(discord.ui.View):
+    def __init__(self):
+        super().__init__()
+        self.add_item(UpgradesMenu())
+
+class ClickTheCookie(discord.ui.View):
 
     @discord.ui.button(label='Click 🍪', style=discord.ButtonStyle.gray)
     async def Click(self, interaction: discord.Interaction, button: discord.ui.Button) -> None:
@@ -40,18 +59,36 @@ class ClickTheCookieButton(discord.ui.View):
         data = getUserData(user)
         cookies = getCookiesFromData(data)
         embed = discord.Embed(
-        title=None,
+            title=None,
             description=None,
             color=discord.Color.dark_orange(),
             timestamp=datetime.datetime.now()
         )
 
-        view = ClickTheCookieButton()
+        view = ClickTheCookie()
 
         embed.set_author(name='Cookie Clicker bot 🍪')
         embed.add_field(name='Cookie Count', value=f'{user.global_name} has {cookies} cookies 🍪')
         await interaction.response.edit_message(embed=embed, view=view)
         self.stop()
+    
+    @discord.ui.button(label='Upgrades 💸', style=discord.ButtonStyle.green)
+    async def GoToUpgrades(self, interaction: discord.Interaction, button: discord.ui.Button) -> None:
+        embed = discord.Embed(
+            title=None,
+            description=None,
+            color=discord.Color.brand_green(),
+            timestamp=datetime.datetime.now()
+        )
+        embed.set_author(name='Upgrades 💸')
+        UserData = getUserData(interaction.user)
+        MoreCPC_level = UserData['upgrades']['MoreCookiesPerClick']
+        EvenMoreCPC_level = UserData['upgrades']['EvenMoreCPc']
+        embed.add_field(name='More CPC', value=f'level {MoreCPC_level}')
+        embed.add_field(name='Even more CPC', value=f'level {EvenMoreCPC_level}')
+
+        view = UpgradesView()
+        await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
 
 client = MyClient(intents=intents)
 
@@ -76,7 +113,6 @@ def clickCookie(user) -> None:
             fileData['cookies'] = str(cookies)
 
             f.seek(0)
-            print(f'f: {f}, \n FileData: {fileData}')
             json.dump(fileData, f)
             f.truncate()
 
@@ -112,7 +148,7 @@ async def on_ready():
     print(f'Logged in as {client.user}')
     print('-------------------------------')
 
-@client.tree.command(name='test', description='kokot')
+@client.tree.command(name='cookieclicker', description='Open the main menu')
 async def testFunc(Interaction: discord.Interaction) -> None:
     user = Interaction.user
     data = getUserData(user)
@@ -124,14 +160,29 @@ async def testFunc(Interaction: discord.Interaction) -> None:
         timestamp=datetime.datetime.now()
     )
 
-    view = ClickTheCookieButton()
+    view = ClickTheCookie()
 
     embed.set_author(name='Cookie Clicker bot 🍪')
     embed.add_field(name='Cookie Count', value=f'{user.global_name} has {cookies} cookies 🍪')
-    await Interaction.response.send_message(embed=embed, view=view)
+    await Interaction.response.send_message(embed=embed, view=view, ephemeral=True)
 
+@client.tree.command(name='upgrades', description='Show the cookie upgrades')
+async def GoToUpgrades(interaction: discord.Interaction) -> None:
+        
+        embed = discord.Embed(
+            title=None,
+            description=None,
+            color=discord.Color.brand_green(),
+            timestamp=datetime.datetime.now()
+        )
+        embed.set_author(name='Upgrades 💸')
+        UserData = getUserData(interaction.user)
+        MoreCPC_level = UserData['upgrades']['MoreCookiesPerClick']
+        EvenMoreCPC_level = UserData['upgrades']['EvenMoreCPc']
+        embed.add_field(name='More CPC', value=f'level {MoreCPC_level}')
+        embed.add_field(name='Even more CPC', value=f'level {EvenMoreCPC_level}')
 
-
-
+        view = UpgradesView()
+        await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
 
 client.run(token=token, log_handler=handler, log_level=logging.INFO)
